@@ -41,6 +41,12 @@ Lambda invokes your function in a secure and isolated execution environment. To 
 As mentioned in the diagram only 6 instances of execution environment is created for 10 request.
 Execution environment is created if no instances are available else reuse the available execution environment.
 
+**AWS Lambda Execution Time Limit**
+-----------------------------------
+AWS Lambda has a configurable maximum execution time limit of up to 15 minutes. If this limit is reached, 
+the function will be stopped forcefully by AWS. This means that long-running processes are not easily possible 
+with Lambda
+
     **Understanding reserved concurrency and provisioned concurrency**
 --------------------------------------------------------------------------
 
@@ -69,14 +75,15 @@ unprovisioned concurrency but with cold start problem.
 
 
 * You use reserved concurrency to define the maximum number of execution environments reserved for a Lambda function. 
+
 * However, none of these environments come pre-initialized. As a result, your function invocations may take longer 
     because Lambda must first initialize the new environment before being able to use it to invoke your function. 
     When Lambda has to initialize a new environment in order to carry out an invocation, this is known as a cold start. 
     To mitigate cold starts, you can use provisioned concurrency.
 
-* Provisioned concurrency is the number of pre-initialized execution environments that you want to allocate to your function.
-    If you set provisioned concurrency on a function, Lambda initializes that number of execution environments so that 
-    they are prepared to respond immediately to function requests.
+* Provisioned concurrency is the number of pre-initialized execution environments that you want to allocate to your 
+  function. If you set provisioned concurrency on a function, Lambda initializes that number of execution 
+  environments so that they are prepared to respond immediately to function requests.
 
 * Using provisioned concurrency incurs additional charges to your account.
 
@@ -155,5 +162,102 @@ by service discovery this can be used.
 **Difference between domain driven and event driven architecture in microservices**
 -----------------------------------------------------------------------------------
 
+**When to Use DDD for Microservices-->**
+----------------------------------------
+**Complex Domains:**
+--------------------
+If your application deals with intricate business logic and requires a deep understanding of the 
+domain, DDD can provide a structured approach to model and implement the system.
 
+**Large Systems:**
+------------------
+When you're building a microservices architecture with multiple services, 
+DDD can help define clear boundaries and interactions between these services, promoting 
+modularity and scalability.
+
+**Aligning with Business Logic:**
+---------------------------------
+DDD encourages aligning software design with business requirements, 
+ensuring that each microservice encapsulates a specific business capability.
+
+**Decomposing Monoliths:**
+--------------------------
+If you're migrating a monolithic application to a microservices architecture, 
+DDD can help identify logical boundaries and ensure each microservice remains cohesive. 
+
+**When to use Event Driven Architecture**
+-----------------------------------------
+Event-driven design for microservices is best suited for scenarios involving real-time processing, 
+high concurrency, and complex event handling, such as IoT applications, real-time analytics, and systems 
+requiring asynchronous communication and coordination between teams or different regions. 
+
+**What is GRAPHQL**
+-------------------
+GraphQL is a query language and API specification for building client applications, while 
+RAML (RESTFUL API Modeling Language) is a specification for defining RESTFUL APIs. 
+GraphQL focuses on efficient data fetching, while RAML is designed for API design and 
+documentation.
+
+**AWS Cloud Migration Techniques**
+----------------------------------
+Migration from on premises to AWS Cloud
+You can migrate any workload – applications, websites, databases, storage, physical or virtual 
+servers – and even entire data centers from an on-premises environment.
+<TBC>
+
+**Java 17 features**
+--------------------
+1. Pattern Matching for Switch (Preview) - we can use type also as given below
+------------------------------------------------------------------------------
+
+    public String checkObject(Object obj) {
+            return switch (obj) {
+            case Human h -> "Name: %s, age: %s and profession: %s".formatted(h.name(), h.age(), h.profession());
+            case Circle c -> "This is a circle";
+            case Shape s -> "It is just a shape";
+            case null -> "It is null";
+            default -> "It is an object";
+        };
+    }
+
+2. Sealed Classes
+-----------------
+
+    The syntax for declaring a sealed class involves using the sealed modifier before the class keyword. 
+    Additionally, you need to specify which subclasses are allowed to extend the sealed class using 
+    the permits keyword followed by the list of permitted subclasses.
+    
+    Here’s an example:
+    
+    public sealed class Shape permits Circle, Square, Triangle {
+    // Class members and methods
+    }
+    
+    
+    * Sealed classed can helps to maintainability and encapsulation of code
+      * It also ensures that unnecessary classes cannot inherit the super class.
+
+
+**Difference between BDD and TDD**
+----------------------------------
+BDD uses tools like Cucumber or SpecFlow to write tests in a "Given-When-Then" format, 
+making the specifications executable and verifiable.
+Feature Files:
+--------------
+These files, often written in Gherkin syntax, define user stories and scenarios, outlining 
+the desired behavior of the software.
+Step Definitions:
+-----------------
+These map the Gherkin steps to actual test code, linking the human-readable language with 
+executable tests.
+Reporting Tools:
+----------------
+These tools visualize test results and track progress, offering insights into the health and 
+stability of the application. 
+
+**TDD (Test-Driven Development)**
+---------------------------------
+Focuses on writing tests before code, ensuring functionality and 
+aiding in design, while BDD (Behavior-Driven Development) emphasizes system behavior from a user 
+perspective, promoting collaboration and using natural language.
 

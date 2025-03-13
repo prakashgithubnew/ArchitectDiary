@@ -26,6 +26,12 @@
 * You can set up, deploy, or duplicate microservices in an instant, an action that's not 
   possible with traditional applications. 
 
+**what is regression testing**
+-------------------------------
+
+Testing of new code or bug fixes to check if those fixes are impacting any other functionality 
+of application
+
 **Tools and Utilities which are provided by Cloud Natives are**
 ---------------------------------------------------------------
     CI/CD
@@ -45,6 +51,8 @@
     This involves changing part of the software module to migrate the application to 
     cloud servers. You can thus use the application from a browser while retaining 
     its original features.
+    Using cloud enabled we cannot leverage the features of scalability, flexibility and resilience , latency handling.
+
 
 **Cloud native compared to cloud enabled**
 
@@ -235,8 +243,7 @@ using this address as above get login to EC2 instance using ppk auth
 copy jar to ec2 instance using winscp
 run the jar in ec2 instance and using the IPV4 address hit the address and check the URL
 
-
-2. Second way
+2.Second way
 -------------
 create spring boot jar and add in to your docker.
 Create one task definitions and add docker image to this task.
@@ -312,7 +319,7 @@ There are mainly below parties involved in authorization process
 Application
 Authorisation server
 Resources - which are protected
-end user
+End user
 
 
 
