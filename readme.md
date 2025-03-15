@@ -322,11 +322,84 @@ Resources - which are protected
 End user
 
 
+**Potential pitfalls in the development of Event-driven architecture**
+----------------------------------------------------------------------
 
+Event-driven architectures, especially as they grow in complexity with more producers and consumers,
+can encounter a series of challenges:
 
+1. Only some systems need granularity and complexity.Avoid micro-optimizations and over-segmenting your architecture. Start simple and evolve as needed.
+2. Sometimes, developers break down services or events too much. This can lead to a “chatty” system where components communicate excessively over the network, causing overhead.
+3. Maintaining a state can be challenging in a distributed event-driven system. If order matters, consider using stateful stream processing solutions or sequence numbers in events to reconstruct the proper order.
+4. Ensure that event handlers are idempotent, meaning they can process the same message more than once without side effects.
+5. Statelessness: Design your event consumers to be stateless whenever possible, meaning a repeated 
+   event will not produce a different outcome.
+6. Unique Event IDs: Assign unique IDs to events. Before processing an event, check if its ID has 
+   been processed recently to prevent duplicate processing.
+7. You risk losing data without a way to handle events that can’t be processed. Dead-letter queues capture these events so they can be analyzed and acted upon.
+8. Ensure Proper Logging , monitoring and tracing.
 
+**where to use EDD**
+---------------------
+In stock market or trading platforms where notifications is meaning ful.
+where real time processings are needed.
+In bigger application where plenty of microservices are there to communicate each other.
 
+**Rabbit MQ or Kafka**
+----------------------
+This is preferred when very few microservices are there for communication and aysnchronous messaging is needed
+we can still achieve decoupling and resilence
 
+**What is SAGA Design Pattern and where to use it**
+---------------------------------------------------
+SAGA Design Pattern is used for distributed applications.For legcay or traditional system 
+we use 2 Phase Commit which means transaction has to be completed in 2 phases
+1. First commit the Changes. 
+2. second either commit or abort the changes.
 
+Problems with Traditional Distributed Transaction Protocols
+
+Blocking Nature: If the coordinator fails after initiating the transaction, participants may be left waiting indefinitely, causing delays.
+Single Points of Failure: The coordinator is crucial for decision-making. If it crashes, the entire transaction can get stuck, impacting reliability.
+Network Partitions: If the network splits, some nodes might not receive the final decision, 
+leading to inconsistent states (i.e., some nodes might commit while others don’t), which causes 
+data inconsistency.
+
+These problems make 2PC unsuitable for modern, highly available, and fault-tolerant systems.
+
+**Example of SAGA Design Pattern**
+----------------------------------
+
+Let’s understand how SAGA works using the example of an e-commerce order process with the SAGA Execution Coordinator and SAGA Log.
+
+Step 1: Create Order: Reserve the product.
+Step 2: Process Payment: Charge the customer’s card.
+Step 3: Update Inventory: Reduce the stock.
+Step 4: Deliver Order: Ship the product to the customer.
+
+![img_11.png](img_11.png)
+
+Start the SAGA:
+The process begins by executing the first step in the sequence.
+Execute Step 1:
+The system performs the first sub-transaction (e.g., creating the order and reserving the product). If this step is successful, move to Step 2. If it fails, trigger its compensating action (e.g., cancel the order) and stop.
+Execute Step 2:
+If Step 1 was successful, the next step (e.g., process the payment) is executed. If Step 2 fails (e.g., payment is declined), its compensating action (e.g., refund the payment) is triggered, and Step 1’s compensating action (e.g., unreserve the product) is also executed.
+Execute Step 3:
+If Step 2 was successful, proceed to the next step (e.g., update inventory). If Step 3 fails, its compensating action (e.g., reverse inventory update) is triggered, and Step 2’s compensating action (e.g., refund payment) is executed.
+Execute Step 4:
+Finally, if all previous steps are successful, the last step (e.g., deliver the order) is executed. If any prior step has failed, its compensating actions are triggered, ensuring the system remains consistent.
+
+**Advantages of SAGA Pattern**
+------------------------------
+With SAGA, if one step fails, the entire process can be rolled back or compensated without affecting other steps.
+SAGA can support asynchronous processing, allowing for greater concurrency and performance.
+SAGA can handle transactions across multiple services or databases, allowing for more scalable and distributed architectures.
+
+**Disadvantages of SAGA Pattern**
+---------------------------------
+Implementing SAGA requires additional coding and architecture to handle compensation and rollback steps.
+Not all frameworks or platforms support SAGA out of the box, which can make implementation more difficult.
+The SAGA pattern requires careful design to ensure that the compensations and rollbacks are implemented correctly and can handle all possible failure scenarios.
 
 

@@ -261,3 +261,5 @@ Focuses on writing tests before code, ensuring functionality and
 aiding in design, while BDD (Behavior-Driven Development) emphasizes system behavior from a user 
 perspective, promoting collaboration and using natural language.
 
+**Idempotent**
+--------------
