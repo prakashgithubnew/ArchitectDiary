@@ -263,3 +263,72 @@ perspective, promoting collaboration and using natural language.
 
 **Idempotent**
 --------------
+GET , PUT, HEAD,DELETE
+These methods are considered as idempotent as no effect on repeated invocation call.
+
+POST and PATCH are considered as not Idempotent as repeated invocation can 
+lead to multiple record creation.
+
+
+**How to Monitor AWS Lambda Response time**
+-------------------------------------------
+
+AWS X Ray - This is used to monitor real time metrics of performance and response time for 
+serverless applications in distributed enviornment.
+
+Use AWS X-Ray for end-to-end tracing, CloudWatch Logs for detailed insights into execution, 
+and CloudWatch metrics for overall performance analysis, including invocation duration and 
+error rates.
+
+AWS Lambda automatically sends metrics to CloudWatch, including invocation duration, error rates, 
+and concurrency.
+
+**How can you improve AWS Lambda performance Issues**
+------------------------------------------------------
+
+Focus on optimizing memory allocation, minimizing cold starts, reducing package size, and 
+utilizing features like provisioned concurrency and connection reuse.
+
+For Example in MAE project we have done these things
+
+**Lambda Layers:**
+Use Lambda Layers to share code and dependencies between multiple functions, reducing deployment 
+artifact size and improving cold start times. when you will open your lambda in AWS you will layers info 
+in layers.
+
+**Provisioned Concurrency:**
+Allocate pre-initialized execution environments to your function, ready to respond to incoming 
+requests immediately. Be aware that this incurs additional charges. 
+
+**Reduce Package Size**
+Keep your package as light as possible to move and work lambda faster.
+Move any shared code or functionality to common lambda layer like JKS file or pem file to common
+lambda layer
+
+**Optimize memory allocation**
+Allocate more memory to your lambda but not too much only that is required but incase of performance
+issue increase little bit of memory and check the performance you will get it.
+
+Memory is like fuel for your lambda
+
+in MAE project for one of the AIP Lambda we have allocated this much memory
+Memory - 2048 MB
+Ephemeral Memory - 512MB
+
+**Minimize Cold Starts**
+Allocate some provisioned concurrency to get rid of cold start problem.
+
+**Leverage AWS X-Ray for tracing**
+Using AWS X-Ray for tracing helps you make your AWS Lambda functions work faster. 
+Setting up an X-Ray shows you how your functions run and where they might be slowing down. 
+You can see the whole path of each request and find out what’s causing delays.
+
+**what is timeout in AWS Lambda**
+---------------------------------
+20 seconds we have kept in config.
+
+**Difference between Authorization and Authentication**
+-------------------------------------------------------
+Authentication verifies a user's identity (who they are), while authorization determines what 
+actions or resources they are allowed to access after being authenticated (what they can do).
+

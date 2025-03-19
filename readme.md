@@ -51,7 +51,8 @@ of application
     This involves changing part of the software module to migrate the application to 
     cloud servers. You can thus use the application from a browser while retaining 
     its original features.
-    Using cloud enabled we cannot leverage the features of scalability, flexibility and resilience , latency handling.
+    Using cloud enabled we cannot leverage the features of scalability, flexibility and resilience , 
+    latency handling.
 
 
 **Cloud native compared to cloud enabled**
@@ -352,7 +353,7 @@ we can still achieve decoupling and resilence
 
 **What is SAGA Design Pattern and where to use it**
 ---------------------------------------------------
-SAGA Design Pattern is used for distributed applications.For legcay or traditional system 
+SAGA Design Pattern is used for distributed applications.For legacy or traditional system 
 we use 2 Phase Commit which means transaction has to be completed in 2 phases
 1. First commit the Changes. 
 2. second either commit or abort the changes.
