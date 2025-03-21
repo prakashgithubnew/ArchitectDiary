@@ -404,3 +404,4 @@ Not all frameworks or platforms support SAGA out of the box, which can make impl
 The SAGA pattern requires careful design to ensure that the compensations and rollbacks are implemented correctly and can handle all possible failure scenarios.
 
 
+

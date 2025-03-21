@@ -332,3 +332,19 @@ You can see the whole path of each request and find out what’s causing delays.
 Authentication verifies a user's identity (who they are), while authorization determines what 
 actions or resources they are allowed to access after being authenticated (what they can do).
 
+**what is the execution time limit for any Lambda**
+---------------------------------------------------
+15 minutes , after 15 minutes lambda got terminated and may encounter 409 request
+
+**Reserved Concurrency and Provisoned Concurrency**
+----------------------------------------------------
+Use **reserved concurrency** to reserve a portion of your account's concurrency for a function. 
+This is useful if you don't want other functions taking up all the available unreserved concurrency.
+
+Use **provisioned concurrency** to pre-initialize a number of environment instances for a function. 
+This is useful for reducing cold start latencies.
+
+if you have allocated 400 reserved concurrency to lambda 1 and 400 to lambda 2 and 
+kept 200 concurrency as unreserved then in case-
+1. if lambda 1 or 2 get more request and 400 concurrency limits are already reached then this function
+will experience throttling and started failing request.
