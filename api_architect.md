@@ -9,7 +9,7 @@ features and improvements are enabled.
 
 when you want to give some additional business or new customer experience to few customers not all but 
 also want to keep old business with old customers.Then upgrading the existing version might be 
-breaking change so you dont want to touch exsitng business and want to update the business for new customers 
+breaking change so you don't want to touch existing business and want to update the business for new customers 
 then add versioning will work here so it will be no impact on old customer and new customers can also have new experience.
 
 **How many types of API Versioning**
@@ -73,7 +73,6 @@ One of the most popular service mesh is Istio
 7. Event-Driven Architecture
 8. Domain Driven Architecture
 9. service discovery  - Using Eureka(Used in Barclays)
-
 
 **Which API Gateways are used in Barclays**
 --------------------------------------------

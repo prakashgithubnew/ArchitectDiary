@@ -343,13 +343,13 @@ can encounter a series of challenges:
 **where to use EDD**
 ---------------------
 In stock market or trading platforms where notifications is meaning ful.
-where real time processings are needed.
+where real time processing are needed.
 In bigger application where plenty of microservices are there to communicate each other.
 
 **Rabbit MQ or Kafka**
 ----------------------
-This is preferred when very few microservices are there for communication and aysnchronous messaging is needed
-we can still achieve decoupling and resilence
+This is preferred when very few microservices are there for communication and aysnchronous 
+messaging is needed we can still achieve decoupling and resilence.
 
 **What is SAGA Design Pattern and where to use it**
 ---------------------------------------------------
@@ -393,9 +393,11 @@ Finally, if all previous steps are successful, the last step (e.g., deliver the 
 
 **Advantages of SAGA Pattern**
 ------------------------------
-With SAGA, if one step fails, the entire process can be rolled back or compensated without affecting other steps.
+With SAGA, if one step fails, the entire process can be rolled back or compensated without affecting
+other steps.
 SAGA can support asynchronous processing, allowing for greater concurrency and performance.
-SAGA can handle transactions across multiple services or databases, allowing for more scalable and distributed architectures.
+SAGA can handle transactions across multiple services or databases, 
+allowing for more scalable and distributed architectures.
 
 **Disadvantages of SAGA Pattern**
 ---------------------------------
