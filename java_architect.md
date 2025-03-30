@@ -406,4 +406,54 @@ Not all frameworks or platforms support SAGA out of the box, which can make impl
 The SAGA pattern requires careful design to ensure that the compensations and rollbacks are implemented correctly and can handle all possible failure scenarios.
 
 
+**What is TOGAF Architectural principles**
+------------------------------------------
+
+The Open Group Architecture Framework (TOGAF).TOGAF is a high-level approach to design.
+It is typically modeled at four levels: Business, Application, Data, and Technology.
+It relies heavily on modularization, standardization, and 
+already existing, proven technologies and products.
+
+Before you architect something we need to understand 4 domains-
+
+1. Business - How business works in the organisation.what are the key business 
+    processes of the organization.
+2. Data - Understand legacy or existing data assets
+3. Applications - Blueprints of the existing application work 
+4. Technology- what is the technology infrastructure is being used to support tech deployment.
+
+**What is SOA**
+---------------
+Service-Oriented Architecture (SOA) is an architectural style where software components are 
+developed as loosely coupled services that communicate over a network. These services are reusable, 
+interoperable, and independent, promoting modular development.
+
+**Microservices vs SOA**
+-------------------------
+* SOA focuses on reusable enterprise-level services, while Microservices focus on smaller, 
+  independently deployable services.
+
+* SOA typically uses an ESB, while Microservices use lightweight communication like REST or 
+  message queues (Kafka, RabbitMQ).
+
+* SOA is still used in Enterprize architecture where service communications are established via 
+    ESB and ESB plays an important role in service communication.ESB is centralized hub.
+    SOA are centralized by ESB where as Microservices are decentralized
+  SOA are hardly scalable but Microservices are highly scalable.
+* SOA is good for Large enterprize systems with legacy integration but M/S are good for independant 
+    services, modern and cloud native applications.
+
+**When to Choose SOA?**
+-----------------------
+Your organization has legacy systems that need integration.
+✅ You need enterprise-level governance and central control.
+✅ Your business deals with multiple applications that need to communicate efficiently (e.g., banking, healthcare, government systems).
+✅ Security and standardized protocols (SOAP, WSDL, XML) are critical.
+
+💡 Example: Large banking institutions, ERPs, and government services often use SOA.
+
+
+
+**API Security**
+----------------
 
