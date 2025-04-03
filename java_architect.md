@@ -401,9 +401,12 @@ allowing for more scalable and distributed architectures.
 
 **Disadvantages of SAGA Pattern**
 ---------------------------------
-Implementing SAGA requires additional coding and architecture to handle compensation and rollback steps.
-Not all frameworks or platforms support SAGA out of the box, which can make implementation more difficult.
-The SAGA pattern requires careful design to ensure that the compensations and rollbacks are implemented correctly and can handle all possible failure scenarios.
+Implementing SAGA requires additional coding and architecture to handle compensation and 
+rollback steps.
+Not all frameworks or platforms support SAGA out of the box, 
+which can make implementation more difficult.
+The SAGA pattern requires careful design to ensure that the compensations and 
+rollbacks are implemented correctly and can handle all possible failure scenarios.
 
 
 **What is TOGAF Architectural principles**

@@ -20,11 +20,19 @@ Request param
 Path param
 Hybrid approach - 2 or more strategy either request param or URI or header
 
-**API Versioning strategy**
----------------------------
-1. Managing Multiple Versions
-2. Ensuring Backward Compatibility and Avoiding Breaking Changes
-3. Balancing the Cost of Versioning and Maintenance
+**Why API Versioning required**
+-------------------------------
+Introducing breaking changes (e.g., removing a field, modifying response formats) can 
+disrupt client applications.
+
+Versioning enables gradual adoption of new features while maintaining older versions for 
+clients that need stability.
+
+Different consumers (mobile apps, web apps, third-party integrations) may have 
+dependencies on different API versions.
+
+Deprecate old versions gradually, giving clients time to migrate.
+
 
 **what is service mesh**
 -------------------------
@@ -45,10 +53,11 @@ Control Plane - Manages the layer of security and communication rules.
                 it works as route53 table in AWS Cloud.
 Data plane - sidecars for each service to communicate and transforming the routes.
 
-One of the most popular service mesh is Istio
+One of the most popular service mesh is Istio.
 
-    **Between API Gateway and Service Mesh**
-    ----------------------------------------
+**Between API Gateway and Service Mesh**
+-----------------------------------------
+
 1. API Gateway follows north south Pattern and looks after authentication and authorisation while 
     a service mesh handles functions like load balancing and encryption between services.
 2. The service mesh is in its own unique instance as a sidecar proxy, and it is not exposed to external clients 
@@ -83,6 +92,36 @@ Zuul is built to enable dynamic routing, monitoring, resiliency, and security.
 --------------------------
 Eureka server is used in barclays which contains all information of client and service details
 It's a kind of service discovery utility
+
+
+**CQRS Microservices Design Pattern**
+-------------------------------------
+    Command Query Responsibility Segregation - 
+    
+    * Means Write and Read both from separate DB.
+      * Write in one DB like MYSQL ---> publish event to event store--->Event store is subscribed by 
+        another MONGO db(NO SQL) --->Same data is saved in Mongo DB
+      * When Read happens data is fetched from Mongo DB.
+    
+    **Benefits**
+    ------------
+    1. it provides clear separation of roles making both operations isolated.
+       2. it is beneficial when seperate scaling is needed for reading and writing optimzing both the 
+          operations effectively.
+       3. All events can be stored in event store for future audit purpose.
+    
+    **Where can we leverage CQRS**
+    ------------------------------
+    High-traffic microservices with frequent reads/writes (e.g., e-commerce, banking).
+    
+    Systems requiring separate scalability for read and write operations.
+    
+    Event-driven architectures where real-time data updates are needed.
+
+**SAGA**
+--------
+
+
 
 
 **Difference between domain driven and event driven architecture in microservices**

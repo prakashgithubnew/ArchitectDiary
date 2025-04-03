@@ -282,7 +282,7 @@ actions or resources they are allowed to access after being authenticated (what 
 ---------------------------------------------------
 15 minutes , after 15 minutes lambda got terminated and may encounter 409 request
 
-**Reserved Concurrency and Provisoned Concurrency**
+**Reserved Concurrency and Provisioned Concurrency**
 ----------------------------------------------------
 Use **reserved concurrency** to reserve a portion of your account's concurrency for a function. 
 This is useful if you don't want other functions taking up all the available unreserved concurrency.
