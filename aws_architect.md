@@ -21,8 +21,10 @@ During Big traffic event we can-
 **Lambda Autoscaling**
 ----------------------
 Concurrency is the number of in-flight requests that your AWS Lambda function is handling at the same time. 
-For each concurrent request, Lambda provisions a separate instance of your execution environment. As your functions receive more requests, 
-Lambda automatically handles scaling the number of execution environments until you reach your account's concurrency limit.
+For each concurrent request, Lambda provisions a separate instance of your execution environment. 
+As your functions receive more requests, 
+Lambda automatically handles scaling the number of execution environments until you reach your account's 
+concurrency limit.
 
 By default, Lambda provides your account with a total concurrency limit of 1,000 concurrent executions across all functions in an AWS Region.
 To support your specific account needs, you can request a quota increase and configure 
@@ -169,9 +171,9 @@ servers – and even entire data centers from an on-premises environment.
 2. Sealed Classes
 -----------------
 
-    The syntax for declaring a sealed class involves using the sealed modifier before the class keyword. 
-    Additionally, you need to specify which subclasses are allowed to extend the sealed class using 
-    the permits keyword followed by the list of permitted subclasses.
+    The syntax for declaring a sealed class involves using the sealed modifier before the class 
+    keyword. Additionally, you need to specify which subclasses are allowed to extend the 
+    sealed class using the permits keyword followed by the list of permitted subclasses.
     
     Here’s an example:
     
