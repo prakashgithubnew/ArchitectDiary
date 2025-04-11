@@ -296,3 +296,110 @@ if you have allocated 400 reserved concurrency to lambda 1 and 400 to lambda 2 a
 kept 200 concurrency as unreserved then in case-
 1. if lambda 1 or 2 get more request and 400 concurrency limits are already reached then this function
 will experience throttling and started failing request.
+
+
+**Snow Flake**
+--------------
+* Snowflake is a cloud data platform for data storage and analytics purpose. 
+    while Traditional data storage lack of flexibility and scalability and cannot store semi structured data
+    snowflake can store semi structured.
+
+* you can use S3 to load data in to snowflake for using highly optimised queries
+   snowflake is cost efficient and fast.
+* There is no hardware neither virtual nor physical to select, install, configure or manage from client side.
+* There is no software to install, configure or manage to access it.
+* All ongoing maintenance, management, upgrades and patching are owned by Snowflake itself.
+
+**How much is the max execution time for AWS Lambda** 
+----------------------------------------------------
+15 minutes is the max time for lambda execution, after his lambda will autoterminate
+if you want to extend more time either use step function to chain your lambdas or use EC2,Fargate or ECS for heavy 
+longer running time.
+
+
+**How to use step function to chain lambda for longer running**
+---------------------------------------------------------------
+you can break your tasks in to multiple small tasks and each task will be 
+executed by one lambda.
+you can create one step function to give instructions to run lambdas to run one by one or paralley.
+
+Each lambda will run for 15 minutes and then you can run and finish your tasks effectively.
+
+**Can i run my aws lambdas synchronous way**
+-------------------------------------------
+Yes like below
+
+{
+    "StartAt": "StepOne",
+        "States": {
+
+            "StepOne": {
+            "Type": "Task",
+            "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:Lambda1",
+            "Next": "StepTwo"
+            },
+
+            "StepTwo": {
+            "Type": "Task",
+            "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:Lambda2",
+            "Next": "StepThree"
+            },
+
+            "StepThree": {
+            "Type": "Task",
+            "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:Lambda3",
+            "End": true
+        }
+    }
+}
+
+**How to run in parallel same lambdas**
+---------------------------------------
+
+{
+    "StartAt": "RunInParallel",
+    "States": {
+    "RunInParallel": {
+    "Type": "Parallel",
+    "Branches": [
+        {
+        "StartAt": "Lambda1",
+        "States": {
+        "Lambda1": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:Lambda1",
+        "End": true
+        }
+    }
+    },
+        {
+        "StartAt": "Lambda2",
+        "States": {
+        "Lambda2": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:Lambda2",
+        "End": true
+        }
+    }
+    },
+        {
+        "StartAt": "Lambda3",
+        "States": {
+        "Lambda3": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:Lambda3",
+        "End": true
+        }
+    }
+    }
+    ],
+    "Next": "FinalStep"
+    },
+        "FinalStep": {
+        "Type": "Pass",
+        "Result": "All Lambdas Finished",
+        "End": true
+        }
+    }
+}
+
