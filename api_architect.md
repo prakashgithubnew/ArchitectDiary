@@ -9,8 +9,9 @@ features and improvements are enabled.
 
 when you want to give some additional business or new customer experience to few customers not all but 
 also want to keep old business with old customers.Then upgrading the existing version might be 
-breaking change so you don't want to touch existing business and want to update the business for new customers 
-then add versioning will work here so it will be no impact on old customer and new customers can also have new experience.
+breaking change so you don't want to touch existing business and want to update the business for new 
+customers then add versioning will work here so it will be no impact on old customer and 
+new customers can also have new experience.
 
 **How many types of API Versioning**
 -----------------------------------
@@ -72,16 +73,17 @@ One of the most popular service mesh is Istio.
 2. Circuit Breaker - To avoid multiple calls in case any service is down.
 3. Saga - The saga pattern is used to ensure data consistency across multiple services in a microservices architecture.
    In traditional monolithic systems, transactions are usually managed using a two-phase commit.
-   The saga pattern proposes an alternative solution. It suggests breaking a transaction into multiple local transactions.
+   The saga pattern proposes an alternative solution. It suggests breaking a transaction into 
+   multiple local transactions.
    Each local transaction updates data within a single service and publishes an event.
    Other services listen to these events and perform their local transactions.
    If a local transaction fails, compensating transactions are executed to undo the changes.
 4. Command Query Responsibility Segregation (CQRS)
-6. Service Registry - centralized place where are services registered to discover any service
+6. Service Registry - Centralized place where are services registered to discover any service
    by service discovery this can be used.
 7. Event-Driven Architecture
 8. Domain Driven Architecture
-9. service discovery  - Using Eureka(Used in Barclays)
+9. Service discovery  - Using Eureka(Used in Barclays)
 
 **Which API Gateways are used in Barclays**
 --------------------------------------------
@@ -120,6 +122,27 @@ It's a kind of service discovery utility
 
 **SAGA**
 --------
+A saga is a sequence of local transactions. Each local transaction updates the database and publishes 
+a message or event to trigger the next local transaction in the saga. If a local transaction 
+fails because it violates a business rule then the saga executes a series of compensating 
+transactions that undo the changes that were made by the preceding local transactions.
+
+**SAGA vs 2 Phase commit**
+--------------------------
+SAGA and 2 Phase commit both are used for data consistency and distributed transactions but slightly 
+different approach
+
+SAGA  - Each transaction is a kind of local transaction 
+2phase commit  works on prepare and commit mechanism
+
+SAGA Architecture
+
+![img_16.png](img_16.png)
+
+2 Phase Commit Architecture
+
+![img_17.png](img_17.png)
+
 
 
 
@@ -129,6 +152,7 @@ It's a kind of service discovery utility
 
 **When to Use DDD for Microservices-->**
 ----------------------------------------
+
 **Complex Domains:**
 --------------------
 If your application deals with intricate business logic and requires a deep understanding of the

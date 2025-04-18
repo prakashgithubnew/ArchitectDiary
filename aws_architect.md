@@ -137,6 +137,15 @@ Guide to understand FAN OUT Design Pattern
 
 https://medium.com/aws-lambda-serverless-developer-guide-with-hands/publish-subscribe-fan-out-pattern-in-serverless-architectures-using-sns-sqs-and-lambda-bccaa3abac9e
 
+**Advantage of Fanout design Pattern**
+---------------------------------------
+Decoupled microservices
+each microservice can be scaled independently
+Publisher need not to know who is consuming his message.
+Subscriber need not to know who is publishing the message.
+The whole communication is asynchronous
+Each service can be scaled independantly and decoupled with each other.
+
 
 
 **DLQs**
@@ -222,7 +231,7 @@ lead to multiple record creation.
 -------------------------------------------
 
 AWS X Ray - This is used to monitor real time metrics of performance and response time for 
-serverless applications in distributed enviornment.
+serverless applications in distributed Environment.
 
 Use AWS X-Ray for end-to-end tracing, CloudWatch Logs for detailed insights into execution, 
 and CloudWatch metrics for overall performance analysis, including invocation duration and 
@@ -325,8 +334,9 @@ you can create one step function to give instructions to run lambdas to run one 
 
 Each lambda will run for 15 minutes and then you can run and finish your tasks effectively.
 
-**Can i run my aws lambdas synchronous way**
--------------------------------------------
+**Can I run my aws lambdas synchronous way**
+--------------------------------------------
+
 Yes like below
 
 {
@@ -403,3 +413,69 @@ Yes like below
     }
 }
 
+**Concurrency in Dynamo DB**
+----------------------------
+Concurrency can be handled in DynamoDB using Optimistic Concurrency.
+when you save any item in dynamodb the version is saved for the first time.
+when you update it the same version is fetched from Dynamo DB and after update when its going to save 
+it will check if the same version  is there then the same record is updated else concurrency exception 
+is thrown.
+
+Everytime any record is updated version number is updated everytime.
+
+
+Sample dynamoDB model
+
+@DynamoDBTable(tableName="ProductCatalog")
+public class CatalogItem {
+
+    private Integer id;
+    private String title;
+    private String ISBN;
+    private Set<String> bookAuthors;
+    private String someProp;
+    private Long version;
+
+    @DynamoDBHashKey(attributeName="Id")
+    public Integer getId() { return id; }
+    public void setId(Integer Id) { this.id = Id; }
+
+    @DynamoDBAttribute(attributeName="Title")
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    @DynamoDBAttribute(attributeName="ISBN")
+    public String getISBN() { return ISBN; }
+    public void setISBN(String ISBN) { this.ISBN = ISBN;}
+
+    @DynamoDBAttribute(attributeName = "Authors")
+    public Set<String> getBookAuthors() { return bookAuthors; }
+    public void setBookAuthors(Set<String> bookAuthors) { this.bookAuthors = bookAuthors; }
+
+    @DynamoDBIgnore
+    public String getSomeProp() { return someProp;}
+    public void setSomeProp(String someProp) {this.someProp = someProp;}
+
+    @DynamoDBVersionAttribute
+    public Long getVersion() { return version; }
+    public void setVersion(Long version) { this.version = version;}
+}
+
+**Sample AWS Lambda code**
+----------------------------
+
+Please consider below step function code to call lambda and return the value
+
+        {
+        "Comment": "A simple Step Function that invokes a Lambda function",
+            "StartAt": "InvokeLambda",
+                "States": {
+                    "InvokeLambda": {
+                        "Type": "Task",
+                        "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:YourLambdaFunctionName",
+                        "InputPath": "$",
+                        "ResultPath": "$.lambdaResult",
+                        "End": true
+                    }
+            }
+        }
