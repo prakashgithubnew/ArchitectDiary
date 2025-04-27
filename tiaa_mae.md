@@ -5,13 +5,8 @@ Architecture Flow of TIAA in MAE
 
 How TIAA works e2e flow
 
+TIAA can be used for Authorization and Authentication Purposes.
 
-Great follow-up! The public/private key pair comes into play primarily in token signature validation, especially when JSON Web Tokens (JWTs) are used — which is very common in modern OAuth 2.0 and OpenID Connect implementations.
-
-Here's where they fit in:
-
-
----
 
 Where Public/Private Keys Are Used in REST API Authentication
 
@@ -82,4 +77,19 @@ Summary:
 ---
 
 Let me know if you want to go into JWT structure or a live example of how to validate a token signature!
+
+============================================================
+
+**where should we use mTLS**
+---------------------------------
+
+mTLS is mutual authentication over TLS network where both parties share their certificate and 
+authenticate.
+
+It's not oneway authentication rather both side authentication
+
+**How internal services communicates and use security**
+--------------------------------------------------------
+Internal services trust on the token issued from the central services
+else we can use mTLS Services.
 

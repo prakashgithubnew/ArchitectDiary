@@ -450,13 +450,94 @@ interoperable, and independent, promoting modular development.
 -----------------------
 Your organization has legacy systems that need integration.
 ✅ You need enterprise-level governance and central control.
-✅ Your business deals with multiple applications that need to communicate efficiently (e.g., banking, healthcare, government systems).
+✅ Your business deals with multiple applications that need to communicate efficiently 
+    (e.g., banking, healthcare, government systems).
 ✅ Security and standardized protocols (SOAP, WSDL, XML) are critical.
 
 💡 Example: Large banking institutions, ERPs, and government services often use SOA.
 
-
-
 **API Security**
-----------------
+------------------
+
+Below are the options which can be used for security in microservices
+
+1. Authentication
+Basic Auth - Not Recommended unless HTTPS.
+Token Based - JWT or oAuth
+mTLS - 2 way authentication
+2. Authorisation
+Role based or policy based control is Authorisation
+
+**Basic Auth - How it works** Not Recommended
+---------------------------------------------
+
+1. Client sends the username and password in encoded form ,server decodes the credentials and identify
+2. Highly not recommended as it is not scalable across all microservices
+3. vulnerable if not used in HTTPS protocol.
+
+**Recommended security in microservices for scalable and secure**
+-----------------------------------------------------------------
+oAUth2+JWT
+mTLS for service to service communications
+
+
+**Difference between OAuth and Oauth 2**
+-----------------------------------------
+oAUth and ouaTH2 both are strictly authorization framework only not authentication.
+To add authentication also you can add OpenID COnnect with OAuth.
+
+**E2E SDLC Life Cycle**
+------------------------
+
+
+1. Requirement Gathering  and analysis 
+2. Planning - Resource planning, Estimation, risk management
+3. System design and architecture
+4. Development
+5. Testing
+6. Deployment
+7. Maintenance and support
+
+**what are the non functional requirement**
+--------------------------------------------
+Performance
+Availability
+Scalability
+
+
+**How will you develop the scalable microservices for high traffic day**
+-------------------------------------------------------------------------
+To build scalable microservice
+
+1. Define boundaries as per requirement and business
+2. Define services as loosely coupled and highly cohesive(single responsibility)
+3. Avoid chatty communicaiton
+4. Define stateless microservices(if statefull you can use redis)
+5. for asynchronous communication use kafka,rabbitmQ or SNS/SQS in case of AWS also you can 
+   use event driven architecture
+6. Use CQRS design Pattern for decouling of read and write operations
+7. Use NOSQL for schema less and flexible schema
+8. Use docker containers for deployment Use kubernetes for orchestration , auto scaling or service discovery
+9. Use resillience 4J for cirocuit breaker or retries mechanism
+10. Use API gateway for centralized control
+11. Use ELK for distributed logging
+
+**How will you handle performance bottlenecks in java application**
+-------------------------------------------------------------------
+1.YOU can use JProfiler tool to understand the bottlenecks.
+2. you can analyse the DB response times and check which query is running slow or very late response
+3. you can check if thread issues are there.
+4. Use caching or lazy loading where ever its needed
+5. Use Executorservice for multithreading
+6. Use supplier interface for laxy loading
+7. use parallel stream for multiprocessing
+8. Add indexes in DB and use optmized queries
+
+
+
+
+
+
+
+
 
