@@ -186,3 +186,93 @@ GraphQL is a query language and API specification for building client applicatio
 RAML (RESTFUL API Modeling Language) is a specification for defining RESTFUL APIs.
 GraphQL focuses on efficient data fetching, while RAML is designed for API design and
 documentation.
+
+
+**is there any limit on request and response size?**
+----------------------------------------------------
+Browser Limit: Most modern browsers limit URL length to about 2000–8000 characters.
+
+Internet Explorer: ~2083 characters.
+
+Chrome, Firefox, Edge: ~8000 characters, but still best to stay under 2000.
+
+Server Limit: Web servers (e.g., Apache, Nginx) and API gateways may also impose limits.
+
+API Gateway/Proxy Limits
+Some API management layers (like AWS API Gateway, Azure API Management) may limit URL or header size.
+
+Example: AWS API Gateway has a limit of 10 KB for request headers.
+
+**what is the difference betweeen TLS and mTLS**
+-------------------------------------------------
+TLS where only server certificate will be validated and verified
+mTLS where client and server both certificates are validated and verified.
+
+**How mTLS works?**
+-------------------
+in mTLS clients send his certificate to server for validation and server sends his certificate for validation to client.
+
+How client generates the certificates?
+1. Client generate the private key through Open SSL.
+   openssl genrsa -out client.key 2048
+    private key is stored in client.key file
+2. Request CSR(Certificate signing request) using private key generated in first step
+   openssl req -new -key client.key -out client.csr
+    you will be prompted to enter deails as below
+   Country Name (C)       : IN
+   Organization Name (O)  : Example Corp
+   Common Name (CN)       : client-api-user
+3. Submit CSR to the CA
+4. CA will issue a Client Receives Signed Certificate
+   You’ll receive:
+
+client.crt (the signed client certificate)
+
+Optionally a CA chain (e.g., ca.pem or intermediate.crt)
+5. Now you can make a request like below
+   curl https://secure-api.example.com \
+   --cert client.crt \
+   --key client.key \
+   --cacert ca.crt
+6. The server on the other side will validate this certificate and grant access.
+
+**How SSL/TLS handshake is done**
+---------------------------------
+SSL/TLS Hand shake means only server certificate will be verified at client end
+1. During the SSL handshake, the server sends its digital certificate (and optionally intermediate certificates).
+2. The client reads the Issuer field from the server certificate. This tells the client who signed this certificate (i.e., the CA).
+3. The client checks its trusted certificate store (local store of root CA certificates) to find:
+    A root CA certificate that directly signed the server certificate.
+4. The client uses the public key of the issuing CA (found in the CA certificate) to verify the digital signature on the server certificate.
+    If the signature is valid, it proves that the server certificate was indeed signed by the CA and hasn’t 
+     been tampered with.
+
+**How server generates the certificates at their end?**
+--------------------------------------------------------
+1. Server uses OPENSSL to generate the public and private key.
+   
+   Private key: Kept secret on the server
+   Public key: Shared with the Certificate Authority (CA) to create a certificate
+
+2. The server sends a Certificate Signing Request (CSR) to a CA, which includes:
+Public key
+Organization/domain info (e.g., api.example.com)
+Other metadata (e.g., location, algorithm used)
+3. CA verifies the request and generate the certificate
+4. The server sends its certificate to client , which includes its public key. 
+
+**How JWT Token works in Rest API**
+------------------------------------
+1. Client is onboarded and gets the client id and secret key
+2. Once these above are issued client then login using this and call goes to aurthorization server
+3. Authorisation server verifies the detaisl and sends the oauth url
+4. Then client send request to oauth URL and gets the token(Auth server signs the JWT with its private key.)
+5. This token is send back to client for API access
+6. Further client uses this token and put in header for access to APIs.
+7. Any resource server can verify the jwt token using the public key.
+8. if verified then only authrorisation part is taken care.
+   
+
+JWT Token never contains the public or private key
+
+
