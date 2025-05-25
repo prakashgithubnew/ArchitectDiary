@@ -130,6 +130,13 @@ of application
      ✅ Use Auto-scaling (Kubernetes HPA, AWS Auto Scaling) to allocate resources dynamically.
      ✅ Implement Serverless Architectures where applicable (AWS Lambda, Azure Functions).
 
+Kubernetes is container orchestration service
+it scales up and down the docker applications.
+Automatically deploys applications in on premises and cloud environments
+it works as service discovery and load balancing the applications.
+
+
+
 **Below Principles Should be followed while designing DDD or Microservice**
 
     Define Boundaries  -Single responsibility principle
@@ -151,153 +158,6 @@ of application
                             A circuit breaker is a design pattern that monitors for failures and temporarily disables service operations if a 
                             threshold of errors is reached, allowing the system to continue functioning while the issue is resolved. 
                             This prevents failures from cascading across services and creating system-wide bottlenecks.
-
-**AWS Disaster Recovery Architecture and Strategies**
-------------------------------------------------------
-
-https://www.youtube.com/watch?v=_4hESnziWIE
-
-![img_3.png](img_3.png)
-
-1. Different Strategies for AWS Disaster Recovery
-
-**Backup and Restore(active/passive)**
---------------------------------------
-* active/passive means production servers will be active and DSR servers will be passive
-* active/active means production and DSR servers will be active both.
-* cheapest option
-* will take hours to restore
-* it will take backup and restore
-
-
-**Pilot light(active/passive)**
---------------------------------
-1. Much Faster compared to back up and restore
-2. More Costlier than back up and restore
-3. Can restore live data
-
-
-**warm standby(active/passive)**
---------------------------------
-1. preety fast than previous two options
-2. Always running but for smaller business and for critical business.
-3. More costlier than other 2s.
-
-
-**Multi site(active/active)**
------------------------------
-* zero downtime
-* zero data loss
-* mission critical service
-* high costly
-* always running
-
-
-![img_6.png](img_6.png)
-
-
-we will study how this DSR works but before that we need to understand few terms before moving ahead.
-
-**what is EBS Volume**
-----------------------
-
-* An Amazon EBS (Elastic Block Storage) volume is a durable, block-level storage device that you can attach to your Amazon 
-  EC2 instances, acting like a virtual hard drive for persistent storage
-* EBS volumes store data persistently, meaning the data remains even if the EC2 instance is 
-  stopped or terminated.
-* You can attach EBS volumes to EC2 instances, allowing you to extend the storage capacity of 
-  your virtual machines.
-* EBS volumes are replicated within an Availability Zone to ensure high availability and durability.
-
-**what is EBS Snapshot**
--------------------------
-* An Amazon EBS (Elastic Block Storage) snapshot in AWS is a point-in-time copy of an EBS volume, 
-  acting as a backup that can be used for data protection, disaster recovery, and migrating data.
-* An EBS snapshot is a backup of your EBS volume, which is a virtual hard drive for your Amazon EC2 
-  instances.
-
-**what is EFS File System**
----------------------------
-Amazon Elastic File System (EFS) is a serverless, fully elastic file storage service that allows you to 
-share files across multiple AWS compute instances and on-premises servers, without needing to 
-provision or manage storage capacity
-
-**what is DB Snapshot**
------------------------
-In AWS, a DB snapshot is a point-in-time backup of a relational database instance, 
-capturing all data and configuration settings, allowing for quick recovery or restoration to a 
-specific state.
-
-**Backup and restore Strategies** 
----------------------------------
-
-![img_7.png](img_7.png)
-
-
-**How to run spring boot application in aws**
----------------------------------------------
-1. One way
-------------
-create spring boot application and prepare jar
-create one EC2 instance and get the public IPV4 DNS address
-using this address as above get login to EC2 instance using ppk auth
-copy jar to ec2 instance using winscp
-run the jar in ec2 instance and using the IPV4 address hit the address and check the URL
-
-2.Second way
--------------
-create spring boot jar and add in to your docker.
-Create one task definitions and add docker image to this task.
-Create one task and add above tasks def in to it.
-Create one service and add same task as above.
-create one ECS cluster and add above service to this ECS.
-
-Once ECS is created wait for service to get up and use public URL and hit in browser , it shud be runnblae.
-
-**AWS Region , AZ and VPC**
-----------------------------
-
-
-**Difference between EC2 on ECS and Fargate on ECS**
---------------------------------------------------
-
-EC2 is mainly VM Machines or compute services where as ECS is used to orchestrate EC2 instances.You can run ECS containers on EC2 instances, or on AWS Fargate, 
-a serverless compute engine. AWS Fargate is a serverless compute engine that you can use with ECS to run containers without managing servers or clusters of EC2 instances.
-
-ECS stands for “Elastic Container Service.” Where EC2 uses virtualization and virtual machines (VMs), Amazon ECS is used to manage Docker container applications. 
-It is a fully managed container orchestration service that functions in similar fashion to Kubernetes. Amazon ECS orchestrates Docker containers running via Amazon EC2.
-Rather than deploying a new EC2 instance to scale up, Amazon ECS uses container clusters. Each cluster contains multiple EC2 instances, governed by the Amazon ECS orchestrator 
-to facilitate scaling and failovers. ECS works like a control plane only.
-In summary, ECS allows companies to deploy containerized applications and orchestrate them easily, without the infrastructure management burden.
-
-when we create any tasks def on ECS cluster it asks for launch types which are of 2 types
-1. Fargate  - ECS will manage all the EC2 instances and you dont need to manage at your won.Fargate will provision EC2 instances as per demand and requriement.                                 
-2. EC2 instances - you will need to manage everything at your own like security groups , etc.
-
-when you opt EC2 it's a kind of independent instances which are running your docker images but its not managed ones , you need to manage the capacity , memory, security 
-patching AMIs and all will be taken care by you as you are the driver.
-
-when you opt Fargate then its same as serverless lambda functions where you will tell ECS how many docker images you need to run and all will be 
-taken care by AWS to find and run EC2 instances for you as per your requirement.
-
-**EKS vs ECS**
---------------
-https://www.youtube.com/watch?v=o73kDW0xqlg&t=45s
-
-
-ECS and EKS are the container services which are used to manage the containers.
-Lest suppose you have 4-5 microservices whcih you wanted to dpeloy on AWS using each service in one container. you have chosen EC2 server to deploy these containers in to it.
-But what happen when EC2 server limitation reaches if we need to deploy our next container?
-who manages these EC2 available resources?
-what happen when container crashes?
-in peak hours how would you scale up and scale down instances during peak and low traffic?
-Load balancing the traffic?
-
-
-Difference between ECS and EKS
-
-ECS is like control plane and works like a side car.
-EKS - <will discuss >
 
 
 **What is API Gateway and why it is useful for AWS Cloud Infrastructure**
@@ -329,10 +189,15 @@ End user
 Event-driven architectures, especially as they grow in complexity with more producers and consumers,
 can encounter a series of challenges:
 
-1. Only some systems need granularity and complexity.Avoid micro-optimizations and over-segmenting your architecture. Start simple and evolve as needed.
-2. Sometimes, developers break down services or events too much. This can lead to a “chatty” system where components communicate excessively over the network, causing overhead.
-3. Maintaining a state can be challenging in a distributed event-driven system. If order matters, consider using stateful stream processing solutions or sequence numbers in events to reconstruct the proper order.
-4. Ensure that event handlers are idempotent, meaning they can process the same message more than once without side effects.
+1. Only some systems need granularity and complexity.Avoid micro-optimizations and over-segmenting 
+    your architecture. Start simple and evolve as needed.
+2. Sometimes, developers break down services or events too much. 
+   This can lead to a “chatty” system where components communicate excessively over the network, 
+   causing overhead.
+3. Maintaining a state can be challenging in a distributed event-driven system. 
+   If order matters, consider using stateful stream processing solutions or sequence numbers in events to reconstruct the proper order.
+4. Ensure that event handlers are idempotent, meaning they can process the same message more 
+   than once without side effects.
 5. Statelessness: Design your event consumers to be stateless whenever possible, meaning a repeated 
    event will not produce a different outcome.
 6. Unique Event IDs: Assign unique IDs to events. Before processing an event, check if its ID has 
@@ -532,6 +397,177 @@ To build scalable microservice
 6. Use supplier interface for laxy loading
 7. use parallel stream for multiprocessing
 8. Add indexes in DB and use optmized queries
+
+
+**Key principles of software architecture**
+---------------------------------------------
+Goal - Minimize complexity with fulfilling all the business requirment
+
+This can be achieved by providing layered architecture or seperating the area of concerns
+you can create groups of all the concerns and create a layer of these.
+ 
+diagram below
+![img_18.png](img_18.png)
+
+These areas should have single responsibilities.
+
+**5 Key Principles of Architecture**
+-------------------------------------
+1. separation of concerns
+2. single responsibility
+3. principle of least knowledge - Each component should have minimum knowledge only about other component
+                                   They should ahve access to publi members 
+                                    They should be achieved by interfaces only
+4. Don't repeat your self - like suppose if you are using caching components then this component 
+                             should reusable accross everywhere.
+5. Minimize upfront design - Start with the initial design as minimum as you can and keep incrementing that design
+                             better as you have more clarity on details requirement.
+
+
+
+**General guidelines for software architecture**
+------------------------------------------------
+1. Use consistent pattern in each layer. like dont use MVC and MVVMV pattern in spring.Either 
+   use MVC or either use MVVM not mix.
+2. do not duplicate functionality
+3. prefer composition over inheritence
+4. Establish a code convention - Define what would be the code standards like camlecase or some other convention.
+5. use abstraction 
+
+**UML**
+-------
+To define the visualize flow of system design.
+2 Models which we create to define the system.
+
+Business System Model - Non technical
+IT Model - Technical
+
+**UML Diagrams**
+----------------
+Component diagram - show components and impl and interfaces
+
+class diagram - classes , associations,methods and field details
+
+sequence diagram - class sequence diagram
+
+state diagram - show states and activities and transitions.
+
+activity diagram - show process workflow,decisions etc.
+
+layer diagram - 
+
+use case diagram
+
+**UML Diagram Linking with Architecture**
+-----------------------------------------
+Which UML diagram is used for whcih architecture preparation?
+
+Funcational Requirmeent - Use Case diagram
+Structural elements/Composition - Class diagram/Component diagram
+Structural elements/Collaboration - Sequence diagram/Activity diagram/State diagram
+area concern - layer diagram
+
+**Architecture Design Process**
+-------------------------------
+Create Objectives
+Identify key scenarios
+Create Overview
+Identify key issues
+Create candidate solutions
+
+
+
+**Architectural Design Patterns**
+----------------------------------
+Layered Pattern - Client and server pattern
+Structured Pattern - 
+Presentation Architecture Pattern - Use MVC architecture so that Model, View and 
+Controller can be decoupled from each other.
+Service Architecture Pattern - Isolate and write decoupled service.
+Hybrid Architecture Pattern
+
+-------------------------------------------
+
+**Difference between logging and tracing**
+------------------------------------------
+logging - Finding any issues or errors in each component
+tracing - Tracking the flow of requests as they move through various components and
+services within a distributed system. it shows how many request failed with what error,
+what was the response time, what was the response code, duration of the whole request,
+successful request, method requested.
+
+
+
+Distributed tracing consists of two main concepts
+
+Trace Id(same as correlation id) -is used to trace an incoming request and track it across all the composing services to satisfy a request
+Span Id - spans in between service calls to track each request that is received and to the response that is sent out.
+
+Tools and utilities which can be used for distributed logging in microservices
+----------------------------------------------------------------------------------------------
+Solution 1 - Use elastic search and kibana option
+-----------
+Elastic Search is one of the best tools for distributed logging on microservices architectures.
+Elasticsearch is the preferred full-text search search engine in processes such as content search,
+data analysis, queries and suggestions, especially due to its performance capabilities, powerful and
+flexible features.
+
+<span style="color: green">**Elastic search**</span>
+1. Elasticsearch is a distributed, open source search and analytics engine. If you need security and alert features with Kibana, then it is required to purchase commercial pack.
+2. Elasticsearch is an open source database that is well suited for indexing logs and analytical data.
+3. It is developed in Java and is based on Apache Lucene
+4. Elastic-search has a restful API which brings result for its open source database.
+5. it is scalable and easy to install.
+6. Elasticsearch is fast
+7. Elastic Search is made with high speed and high availability.
+
+<span style="color: green">**Kibana**</span>
+its a user interface to fetch results from Elastic search
+it calls Elastic Search API to fetch results from search engine.
+
+
+Solution 2 - using spring-cloud-sleuth and spring-cloud-zipkin
+--------------------------------------------------------------
+
+
+
+
+**How logging is handled in MAE**
+---------------------------------
+
+we have enabled AWS X-Ray. Utility PL runs by devops team who has enabled XRay for each cell.
+we are following below approach in MAE-
+
+**Approach 1** - Using tracing we can get responses,latency , failure , successful call details.
+------------------------------------------------------------------------------------------------
+1. Added @Tracing(segmentname="") in controller method only, no where else.This is coming from aws sk jar
+   named powertool tracing jar.
+2. What ever the segment name is provided in the name the same is tracked in cloud watch logs.
+3. Add below in orchestrator file in the start of method which starts a segment
+   AWSXRay.beginSegment("AIP_OTHER_PROPERTY_MORTGAGE_SEGMENT")
+   in the end of method
+   AWSXRay.endSegment()
+
+This apporach is also good to understand the memory optimizer of lambda.
+
+**Approach 2**
+--------------
+use log.info,log.debug,log.error which provides 
+
+**Scrum Ceremonies**
+--------------------
+
+Story Points in Jira
+
+XS (1), S (2), M (3), L (5), XL (8), XXL (13).
+
+we don't go beyond 13
+
+
+
+
+
+
 
 
 
